@@ -1,0 +1,4 @@
+{
+    "PERPLEXITY_URL": "https://api.perplexity.ai/chat/completions",
+    "PERPLEXITY_MODEL": "sonar"
+}
