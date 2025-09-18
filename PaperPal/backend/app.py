@@ -73,6 +73,7 @@ async def chat(websocket: WebSocket):
         # accepting websocket connection request
         await websocket.accept()
         # build a StateGraph
+        log_status(status="INFO", source="/app.py::chat()", timestamp=get_readable_timestamp(), msg="Building StateGraph, adding nodes / agents, and their responsibilities\n")
         state_graph = StateGraph(GraphState)
         # add nodes (i.e., agents) to the state_graph
         state_graph.add_node("agent_orchestrator", agent_orchestrator)
@@ -82,10 +83,11 @@ async def chat(websocket: WebSocket):
         state_graph.add_node("agent_critic", agent_critic)
         state_graph.add_node("agent_report_gen", agent_report_gen)
         state_graph.add_node("agent_rag", agent_rag)
+        # responsibility of each agent
+        agent_resp
         # receive request data
         request = await websocket.receive_text()
         request = json.loads(request)
-        
     except Exception as e:
         log_status(status="ERROR", source="/app.py::chat()", timestamp=get_readable_timestamp(), msg=f"Exception: {e}; traceback: {traceback.print_exc()}\n")
     finally:
