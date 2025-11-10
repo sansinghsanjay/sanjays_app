@@ -5,7 +5,7 @@ WORKDIR /app
 # copy project to the work directory
 COPY ./frontend/ .
 # install python packages
-RUN pip install -r ./frontend/requirements.txt
+RUN pip install -r requirements.txt
 # expose port 8501: the port on which Streamlit app runs
 EXPOSE 8501
 # run the app
