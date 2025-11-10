@@ -1,9 +1,9 @@
 pipeline {
   agent any
   environment {
-    APP_NAME = 'myapp'
+    APP_NAME = 'app'
     APP_PORT = '8501'            // change to your app port
-    IMAGE = "myapp:${env.GIT_COMMIT.take(7)}"
+    IMAGE = "app:${env.GIT_COMMIT.take(7)}"
   }
   triggers { pollSCM('') } // optional; GitHub hook is primary trigger
   stages {
