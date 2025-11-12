@@ -1,44 +1,39 @@
 pipeline {
   agent any
   environment {
-    APP_NAME = 'app'
-    APP_PORT = '8501'            // change to your app port
-    IMAGE = "app:${env.GIT_COMMIT.take(7)}"
+    COMPOSE_PROJECT_NAME = 'sanjays_app'   // optional: custom prefix for container names
   }
-  triggers { pollSCM('') } // optional; GitHub hook is primary trigger
+  triggers { pollSCM('') } // optional
   stages {
     stage('Checkout') {
-      steps { checkout scm }
+      steps {
+        checkout scm
+      }
     }
-    stage('Build image') {
+
+    stage('Build and Run with Docker Compose') {
       steps {
         sh '''
-          docker build -t $IMAGE .
+          docker compose down || true
+          docker compose build --no-cache
+          docker compose up -d
         '''
       }
     }
-    stage('Stop old container') {
-      steps {
-        sh '''
-          if [ "$(docker ps -q -f name=$APP_NAME)" ]; then docker stop $APP_NAME; fi
-          if [ "$(docker ps -aq -f name=$APP_NAME)" ]; then docker rm $APP_NAME; fi
-        '''
-      }
-    }
-    stage('Run new container') {
-      steps {
-        sh '''
-          docker run -d --name $APP_NAME -p ${APP_PORT}:${APP_PORT} --restart=always $IMAGE
-        '''
-      }
-    }
+
     stage('Cleanup old images') {
       steps {
         sh 'docker image prune -f || true'
       }
     }
   }
+
   post {
-    failure { echo 'Build failed. Check console output.' }
+    success {
+      echo '✅ App is up via Docker Compose!'
+    }
+    failure {
+      echo '❌ Build failed. Check logs.'
+    }
   }
 }

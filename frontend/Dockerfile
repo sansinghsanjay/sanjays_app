@@ -15,7 +15,7 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 WORKDIR /app
 
 # ---------- Copy application code ----------
-COPY ./frontend/ .
+COPY . .
 
 # ---------- Install dependencies ----------
 RUN pip install --no-cache-dir -r requirements.txt

@@ -4,7 +4,7 @@ import os
 import json
 from fastapi import FastAPI, WebSocket
 from fastapi.middleware.cors import CORSMiddleware
-from langgraph import StateGraph
+from langgraph.graph import StateGraph
 import uvicorn
 import traceback
 
@@ -43,9 +43,7 @@ app = FastAPI(title=constants["FASTAPI_APP_TITLE"], version="0.0.0")
 # Add CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Allows all origins - for development
-    # For production, use specific origins:
-    # allow_origins=["http://localhost:3000", "https://yourdomain.com"],
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["GET", "POST", "PUT", "DELETE"],
     allow_headers=["*"],
@@ -84,7 +82,7 @@ async def chat(websocket: WebSocket):
         state_graph.add_node("agent_report_gen", agent_report_gen)
         state_graph.add_node("agent_rag", agent_rag)
         # responsibility of each agent
-        agent_resp
+        #agent_resp
         # receive request data
         request = await websocket.receive_text()
         request = json.loads(request)
