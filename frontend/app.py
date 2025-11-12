@@ -2,6 +2,7 @@
 import os
 import json
 import streamlit as st
+import requests
 
 # utils imports
 from utils.timestamp import get_current_timestamp
@@ -42,4 +43,9 @@ first_name = st.text_input(label="Enter your first name", placeholder="First Nam
 
 # button
 if(st.button(label="Say hi to me!")):
-    st.toast(body=f"Hi {first_name}!", icon="👋", duration="short")
+    # call the backend API
+    response = requests.post(
+        config["backend_api"] + config["root_endpoint"]
+    )
+    response = response.json()
+    st.toast(body=f"Hi {first_name}! {response['response']}", icon="👋", duration="short")
