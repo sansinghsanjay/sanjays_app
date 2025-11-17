@@ -1,0 +1,29 @@
+:root{
+  /* adaptive paddings */
+  --side-pad: clamp(12px, 4vw, 32px);   /* left/right */
+  --top-pad:  clamp(12px, 3vh, 32px);   /* top */
+}
+
+html, body { height: 100%; }
+
+body{
+  margin: 0; /* reset default browser margin */
+  /* top, right, bottom, left — uses safe-area for notches on mobile */
+  padding: env(safe-area-inset-top, 0px) var(--side-pad) 2rem var(--side-pad);
+  padding-top: calc(var(--top-pad) + env(safe-area-inset-top, 0px)); /* ensure comfortable top spacing */
+  box-sizing: border-box;
+  max-width: 1200px;     /* prevents overly wide content on large screens */
+  margin-left: auto;     /* center page on wide viewports */
+  margin-right: auto;
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* show password - eye icon in password field */
+.password-toggle {
+    cursor: pointer;
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+}

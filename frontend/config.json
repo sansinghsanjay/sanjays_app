@@ -1,6 +1,0 @@
-{
-    "app_title": "Sanjay's App",
-    "app_header": "Testing App",
-    "backend_api": "http://backend:8000",
-    "root_endpoint": "/"
-}
